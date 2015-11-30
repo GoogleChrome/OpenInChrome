@@ -40,13 +40,7 @@ static NSString * const kGoogleChromeHTTPSScheme = @"googlechromes:";
 static NSString * const kGoogleChromeCallbackScheme = @"googlechrome-x-callback:";
 
 static NSString *encodeByAddingPercentEscapes(NSString *input) {
-  NSString *encodedValue = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-      kCFAllocatorDefault,
-      (CFStringRef)input,
-      NULL,
-      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-      kCFStringEncodingUTF8));
-  return encodedValue;
+    return [input stringByAddingPercentEncodingWithAllowedCharacters: NSCharacterSet.URLQueryAllowedCharacterSet];
 }
 
 @implementation OpenInChromeController
@@ -61,10 +55,12 @@ static NSString *encodeByAddingPercentEscapes(NSString *input) {
 }
 
 - (BOOL)isChromeInstalled {
-  NSURL *simpleURL = [NSURL URLWithString:kGoogleChromeHTTPScheme];
-  NSURL *callbackURL = [NSURL URLWithString:kGoogleChromeCallbackScheme];
-  return  [[UIApplication sharedApplication] canOpenURL:simpleURL] ||
-      [[UIApplication sharedApplication] canOpenURL:callbackURL];
+    NSURL *simpleURL = [NSURL URLWithString:kGoogleChromeHTTPScheme];
+    NSURL *secureURL = [NSURL URLWithString:kGoogleChromeHTTPSScheme];
+    NSURL *callbackURL = [NSURL URLWithString:kGoogleChromeCallbackScheme];
+    return ([[UIApplication sharedApplication] canOpenURL:simpleURL] ||
+            [[UIApplication sharedApplication] canOpenURL:secureURL] ||
+            [[UIApplication sharedApplication] canOpenURL:callbackURL]);
 }
 
 - (BOOL)openInChrome:(NSURL *)url {
@@ -74,7 +70,8 @@ static NSString *encodeByAddingPercentEscapes(NSString *input) {
 - (BOOL)openInChrome:(NSURL *)url
      withCallbackURL:(NSURL *)callbackURL
         createNewTab:(BOOL)createNewTab {
-  NSURL *chromeSimpleURL = [NSURL URLWithString:kGoogleChromeHTTPScheme];
+    NSURL *chromeSimpleURL = [NSURL URLWithString:kGoogleChromeHTTPScheme];
+    NSURL *chromeSecureURL = [NSURL URLWithString:kGoogleChromeHTTPSScheme];
   NSURL *chromeCallbackURL = [NSURL URLWithString:kGoogleChromeCallbackScheme];
   if ([[UIApplication sharedApplication] canOpenURL:chromeCallbackURL]) {
     NSString *appName =
@@ -106,7 +103,8 @@ static NSString *encodeByAddingPercentEscapes(NSString *input) {
       // Open the URL with Google Chrome.
       return [[UIApplication sharedApplication] openURL:chromeURL];
     }
-  } else if ([[UIApplication sharedApplication] canOpenURL:chromeSimpleURL]) {
+  } else if ([[UIApplication sharedApplication] canOpenURL:chromeSimpleURL] ||
+             [[UIApplication sharedApplication] canOpenURL:chromeSecureURL]) {
     NSString *scheme = [url.scheme lowercaseString];
 
     // Replace the URL Scheme with the Chrome equivalent.
