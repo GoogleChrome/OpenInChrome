@@ -34,7 +34,7 @@
 @interface OpenInChromeController : NSObject
 
 // Returns a shared instance of the OpenInChromeController.
-+ (OpenInChromeController *)sharedInstance;
++ (instancetype)sharedInstance;
 
 // Returns YES if Google Chrome is installed in the user's system.
 - (BOOL)isChromeInstalled;
