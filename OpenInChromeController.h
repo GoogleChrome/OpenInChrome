@@ -34,20 +34,20 @@
 @interface OpenInChromeController : NSObject
 
 // Returns a shared instance of the OpenInChromeController.
-+ (OpenInChromeController *)sharedInstance;
++ (instancetype)sharedInstance;
 
 // Returns YES if Google Chrome is installed in the user's system.
 - (BOOL)isChromeInstalled;
 
 // Opens a URL in Google Chrome.
-- (BOOL)openInChrome:(NSURL *)url;
+- (BOOL)openInChrome:(NSURL *)URL;
 
 // iOS displays a "Back to app" link on the device's status line if app was
 // launched from another app. This makes the |callbackURL| parameter much less
 // useful. Chrome has stopped processing the callback URL and create new tab
 // options.
 // @warning DEPRECATED: Please use -openInChrome: directly.
-- (BOOL)openInChrome:(NSURL *)url
+- (BOOL)openInChrome:(NSURL *)URL
      withCallbackURL:(NSURL *)callbackURL
         createNewTab:(BOOL)createNewTab __attribute__((deprecated));
 
