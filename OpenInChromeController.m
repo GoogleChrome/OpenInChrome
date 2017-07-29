@@ -40,7 +40,7 @@ static NSString * const kGoogleChromeHTTPSScheme = @"googlechromes:";
 
 @implementation OpenInChromeController
 
-+ (OpenInChromeController *)sharedInstance {
++ (instancetype)sharedInstance {
   static OpenInChromeController *sharedInstance;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
