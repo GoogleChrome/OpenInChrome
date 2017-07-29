@@ -111,15 +111,15 @@
   [self.navigationBar setItems:[NSArray array] animated:NO];
 
   UINavigationItem *item =
-      [[[UINavigationItem alloc] initWithTitle:nil] autorelease];
+      [[[UINavigationItem alloc] initWithTitle:@""] autorelease];
   item.title = self.sourceApp;
   [self.navigationBar pushNavigationItem:item animated:NO];
 
-  item = [[[UINavigationItem alloc] initWithTitle:nil] autorelease];
+  item = [[[UINavigationItem alloc] initWithTitle:@""] autorelease];
   if (!self.sourceApp) {
     item.leftBarButtonItem =
         [[[UIBarButtonItem alloc] initWithTitle:@""
-                                          style:UIBarButtonItemStyleBordered
+                                          style:UIBarButtonItemStylePlain
                                          target:nil
                                          action:nil] autorelease];
   }
@@ -139,7 +139,7 @@
 
   UIBarButtonItem *infoButton =
       [[[UIBarButtonItem alloc] initWithTitle:@"Info"
-                                        style:UIBarButtonItemStyleBordered
+                                        style:UIBarButtonItemStylePlain
                                        target:self
                                        action:@selector(showInfo:)]
           autorelease];
