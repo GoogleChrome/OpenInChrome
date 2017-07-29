@@ -61,7 +61,7 @@ static NSString * const kGoogleChromeHTTPSScheme = @"googlechromes";
         [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:YES];
 
     NSString *scheme = components.scheme;
-    // Replace the URL Scheme with the Chrome equivalent.
+    // Replace the URI Scheme with the Chrome equivalent.
     NSString *chromeScheme = nil;
     if ([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame) {
       chromeScheme = kGoogleChromeHTTPScheme;

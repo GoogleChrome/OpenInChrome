@@ -51,16 +51,10 @@ if ([scheme isEqualToString:@"http"]) {
 
 // Proceed only if a valid Google Chrome URI Scheme is available.
 if (chromeScheme) {
-  NSString *absoluteString = [inputURL absoluteString];
-  NSRange rangeForScheme = [absoluteString rangeOfString:@":"];
-  NSString *urlNoScheme =
-      [absoluteString substringFromIndex:rangeForScheme.location];
-  NSString *chromeURLString =
-      [chromeScheme stringByAppendingString:urlNoScheme];
-  NSURL *chromeURL = [NSURL URLWithString:chromeURLString];
+  components.scheme = chromeScheme;
 
-  // Open the URL with Chrome.
-  [[UIApplication sharedApplication] openURL:chromeURL];
+  // Open the URL with Google Chrome.
+  return [[UIApplication sharedApplication] openURL:components.URL];
 }
 ```
 
